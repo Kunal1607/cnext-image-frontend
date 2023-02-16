@@ -1,0 +1,187 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+body {
+    background: #3A4D95;
+}
+.login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3A4D95;
+}
+.login_card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    width: 25%;
+    text-align: center;
+    padding: 40px;
+    background-color: #fff;
+}
+.login_card img {
+    width: 60%;
+    display: block;
+    margin: 0px auto 30px;
+}
+.login_card input {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    font-family: monospace;
+}
+.login_card button {
+    width: 100%;
+    background-color: #3A4D95;
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid #3A4D95;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 20px;
+    font-family: monospace;
+    text-transform: uppercase;
+}
+.login_card button:hover {
+    background-color: #fff;
+    color: #3A4D95  ;
+}
+.login_card button:focus-visible {
+    outline: none !important;
+}
+.imgallery_container {
+    background: #3A4D95;
+    padding-top: 10px;
+    height: 100vh;
+}
+.imgallery_explorer_box {
+    width: 100%;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    padding: 10px 20px 20px;
+    background: #e5e5e5;
+}
+.imgallery_navbar{
+    align-items: center;
+    padding-bottom: 10px;
+}
+.imgallery_backforw {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 30px;
+}
+.imgallery_backforw svg,.imgallery_searchbar svg {
+    height: 25px;
+    width: 25px;
+    color: #000;
+}
+.imgallery_logout {
+    text-align: right;
+    margin-right: 30px;
+}
+.imgallery_logout svg {
+    height: 25px;
+    width: 25px;
+    color: #000;
+}
+.imgallery_foldertitle {
+    text-align: center;
+    margin-left: 300px;
+}
+.imgallery_sidebar {
+    margin-bottom: 20px;
+}
+.imgallery_sidebar a {
+    color: #000;
+    text-decoration: none;
+}
+.imgallery_folders {
+    background: #fff;
+    padding: 30px 30px;
+    overflow: auto;
+    height: 730px;
+}
+.imgallery_singlefolder {
+    margin: 0px 17px 17px;
+}
+.imgallery_folder_icon img{
+    height: 120px;
+    width: 161px;
+    margin:13px 0px 7px;
+}
+.imgallery_folder_icon svg{
+    height: 150px;
+    width: 161px;
+}
+.imgallery_folder_name {
+    max-width: 161px;
+    text-align: center;
+    min-height: 48px;
+    max-height: 24px;
+    overflow: hidden;
+}
+.imgallery_imgbutton {
+    text-align: center;
+}
+.imgallery_imgbutton button, .imgallery_imgbutton button:active, .imgallery_imgbutton button:visited{
+    background: #2c5364;
+    margin-top: 5px;
+    width: 161px;
+}
+.imgallery_imgbutton button:hover {
+    background: #0f2027;
+}
+.imgallery_modal_img {
+    text-align: center;
+}
+.toast {
+    position: absolute;
+    top: 0;
+    left: 41%;
+}
+.toast_header {
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 1000px) and (min-width: 360px) {
+    .login_card {
+        width: auto;
+        margin: 15px;
+        padding: 30px 15px;
+    }
+    .imgallery_backforw {
+        justify-content: space-between;
+    }
+    .imgallery_container {
+        height: auto;
+        padding: 20px 0px;
+    }
+    .imgallery_explorer_box {
+        margin: 0px;
+        padding: 10px 20px;
+    }
+    .imgallery_folders {
+        border: 1px solid #000;
+        background: #fff;
+        padding: 20px;
+        height: 100%;
+    }
+    .imgallery_singlefolder {
+        margin: 10px 16px;
+    }
+    .imgallery_modal_img img{
+        width: 100%;
+    }
+    .toast {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+}
