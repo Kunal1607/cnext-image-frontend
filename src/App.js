@@ -1,10 +1,8 @@
-import './assets/css/styles.css';
-import Explorer from './components/Explorer';
-import ImgExplorer from './components/ImgExplorer';
-import Login from './components/Login';
-import axios from "axios";
-import { useState } from 'react';
-import { Routes,Route } from 'react-router-dom';
+import "./assets/css/styles.css";
+import Explorer from "./components/Explorer";
+import ImgExplorer from "./components/ImgExplorer";
+import Login from "./components/Login";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
