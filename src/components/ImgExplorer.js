@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaArrowLeft, FaArrowRight, FaSearch, FaPowerOff } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaSearch,
+  FaPowerOff,
+} from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import treeimg from "../assets/images/tree-736885__480.jpg";
 import {
@@ -25,7 +30,9 @@ function ImgExplorer() {
 
   const [fildata, setFildata] = useState([]);
   const fetchAPI = async () => {
-    const response = await axios.get("https://63e5f0a583c0e85a86897d20.mockapi.io/images");
+    const response = await axios.get(
+      "https://63e5f0a583c0e85a86897d20.mockapi.io/images"
+    );
     const data = await response.data;
     setImage(data);
   };
@@ -39,7 +46,6 @@ function ImgExplorer() {
     const newFilter = image.filter((value) => {
       return value.name?.toLowerCase().includes(searchWord?.toLowerCase());
     });
-    console.log(newFilter);
     setFildata(newFilter);
   };
 
@@ -50,7 +56,9 @@ function ImgExplorer() {
           <Row className="imgallery_navbar">
             <Col md={1}>
               <div className="imgallery_backforw">
-                <Link to='/explorer'><FaArrowLeft /></Link>
+                <Link to="/explorer">
+                  <FaArrowLeft />
+                </Link>
                 <a href="#Forward">
                   <FaArrowRight />
                 </a>{" "}
@@ -65,63 +73,66 @@ function ImgExplorer() {
             <Col md={3}>
               <div className="imgallery_searchbar">
                 <InputGroup>
-                  <Form.Control placeholder="Search" onChange={handleFilter}/>
+                  <Form.Control placeholder="Search" onChange={handleFilter} />
                   <InputGroup.Text>
-                    <a href="#Search">
-                      <FaSearch />
-                    </a>
+                    <FaSearch />
                   </InputGroup.Text>
                 </InputGroup>
               </div>
             </Col>
             <Col md={1}>
-                <div className="imgallery_logout">
-                    <Link to='/'><FaPowerOff /></Link>
-                </div>
+              <div className="imgallery_logout">
+                <Link to="/">
+                  <FaPowerOff />
+                </Link>
+              </div>
             </Col>
           </Row>
           <Row className="mt-3">
             <Col>
-                <div className="imgallery_folders d-flex align-content-start flex-wrap">
+              <div className="imgallery_folders d-flex align-content-start flex-wrap">
                 {fildata.length > 0 ? (
-                        <>
-                            {fildata.map((value,i)=>{
-                                return (
-                                    <div className="imgallery_singlefolder" key={i}>
-                                        <div className="imgallery_folder_icon">
-                                            <a href="#Dashboard_Images" onClick={handleShow}>
-                                            <img src={value.image} alt="images" />
-                                            </a>
-                                        </div>
-                                        <div className="imgallery_folder_name">{value.name}</div>                      
-                                        <div className="imgallery_imgbutton">
-                                            <Button onClick={handleToast}>Download</Button>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </>
-                    ):(
-                        <>
-                            {image.map((item, i) => (
-                                <>
-                                    <div className="imgallery_singlefolder" key={i}>
-                                        <div className="imgallery_folder_icon">
-                                            <a href="#Dashboard_Images" onClick={handleShow}>
-                                            <img src={item.image} alt="images" />
-                                            </a>
-                                        </div>
-                                        <div className="imgallery_folder_name">{item.name}</div>                      
-                                        <div className="imgallery_imgbutton">
-                                            <Button onClick={handleToast}>Download</Button>
-                                        </div>
-                                    </div>
-                                </>
-                            ))}
-                        </>
-                    )
-                    }
-              </div> 
+                  <>
+                    {fildata.map((value, i) => {
+                      return (
+                        <div className="imgallery_singlefolder" key={i}>
+                          <div className="imgallery_folder_icon">
+                            <a href="#Dashboard_Images" onClick={handleShow}>
+                              <img src={value.image} alt="images" />
+                            </a>
+                          </div>
+                          <div className="imgallery_folder_name">
+                            {value.name}
+                          </div>
+                          <div className="imgallery_imgbutton">
+                            <Button onClick={handleToast}>Download</Button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {image.map((item, i) => (
+                      <>
+                        <div className="imgallery_singlefolder" key={i}>
+                          <div className="imgallery_folder_icon">
+                            <a href="#Dashboard_Images" onClick={handleShow}>
+                              <img src={item.image} alt="images" />
+                            </a>
+                          </div>
+                          <div className="imgallery_folder_name">
+                            {item.name}
+                          </div>
+                          <div className="imgallery_imgbutton">
+                            <Button onClick={handleToast}>Download</Button>
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                  </>
+                )}
+              </div>
             </Col>
           </Row>
         </div>
@@ -153,7 +164,9 @@ function ImgExplorer() {
         delay={3000}
         autohide
       >
-        <Toast.Header className="toast_header" closeButton="true">ABC.jpg</Toast.Header>
+        <Toast.Header className="toast_header" closeButton="true">
+          ABC.jpg
+        </Toast.Header>
         <Toast.Body>Your file has been downloaded.</Toast.Body>
       </Toast>
     </>
