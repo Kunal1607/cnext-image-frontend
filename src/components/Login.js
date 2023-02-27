@@ -1,54 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 import logo from "../assets/images/logo-blue.svg";
+import { useNavigate } from "react-router-dom";
+import { CgDanger } from "react-icons/cg";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
+  const [alert, setAlert] = useState();
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    axios
+      .post("https://backend-cms-service.careers360.de/login/", {
+        headers: {
+          "x-api-key": "xeJJzhaj1mQ-ksTB_nF_iH0z5YdG50yQtwQCzbcHuKA",
+        },
+        responseType: "json",
+        email,
+        password,
+      })
+      .then(() => {
+        navigate("/explorer");
+      })
+      .catch(() => {
+        return (
+          setAlert(
+            <div className="imgallery_alert">
+              <CgDanger />
+              Your Email Id or Password is Incorrect
+            </div>
+          ),
+          navigate("/")
+        );
+      });
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: () => navigate("/explorer"),
+    // onSuccess: response => console.log("Login Successfull: ",response),
+    onError: () => navigate("/"),
+    // onError: response => console.log("Login Failed: ",response),
+  });
+
   return (
     <div className="login">
       <div className="login_card">
         <img src={logo} alt="logo" />
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Enter Your Email"
             id="email"
-            autoComplete="off"
+            name="email"
+            autoComplete="on"
             autoFocus
-            required
           />
           <input
             type="password"
             placeholder="Enter Your Password"
             id="password"
-            required
+            name="password"
+            autoComplete="on"
           />
+          {alert}
           <button type="submit">Login</button>
-          <button type="submit">Login With Google</button>
         </form>
+        <button onClick={() => login()}>Login With Google</button>
       </div>
     </div>
   );
 };
 
 export default Login;
-
-// import React from 'react'
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import logo from '../assets/images/logo-blue.svg'
-// import { Button,Form } from 'react-bootstrap'
-
-// const Login = () => {
-//   return (
-//     <div className='login'>
-//         <div className='login_card'>                                    REACT BOOTSTRAP
-//             <img src={logo} alt="logo" />
-//             <Form.Control placeholder='Enter Your Email Address' required autoFocus />
-//             <Form.Control placeholder='Enter Your Password' required/>
-//             <Button>LOGIN</Button><br></br>
-//             <Button>LOGIN WITH GOOGLE</Button>
-//         </div>
-//     </div>
-//   )
-// }
-
-// export default Login

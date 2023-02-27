@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
 import { FcFolder } from "react-icons/fc";
 import { FaPowerOff } from "react-icons/fa";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  Spinner,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function Explorer() {
   const [folder, setFolder] = useState([]);
   const [fildata, setFildata] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAPI = async () => {
+    setIsLoading(true);
     const response = await axios.get(
       "https://63e5f0a583c0e85a86897d20.mockapi.io/folders"
     );
     const data = await response.data;
     setFolder(data);
+    setIsLoading(false);
+    // setTimeout(() => {
+    //     setFolder(response.data);
+    //     setIsLoading(false);
+    //   }, 1000);
   };
 
   useEffect(() => {
@@ -27,7 +40,9 @@ function Explorer() {
   const handleFilter = (e) => {
     const searchWord = e.target.value;
     const newFilter = folder.filter((value) => {
-      return value.folderName?.toLowerCase().includes(searchWord?.toLowerCase());
+      return value.folderName
+        ?.toLowerCase()
+        .includes(searchWord?.toLowerCase());
     });
     setFildata(newFilter);
   };
@@ -39,10 +54,8 @@ function Explorer() {
           <Row className="imgallery_navbar">
             <Col md={1}>
               <div className="imgallery_backforw">
-                <a href="#Back">
-                  <FaArrowLeft />
-                </a>{" "}
-                <Link to="/explorer/images">
+                <FaArrowLeft />
+                <Link to="/explorer/foldername">
                   <FaArrowRight />
                 </Link>
               </div>
@@ -57,15 +70,17 @@ function Explorer() {
               <div className="imgallery_searchbar">
                 <InputGroup>
                   <Form.Control placeholder="Search" onChange={handleFilter} />
-                  <InputGroup.Text><FaSearch /></InputGroup.Text>
+                  <InputGroup.Text>
+                    <FaSearch />
+                  </InputGroup.Text>
                 </InputGroup>
               </div>
             </Col>
-            <Col md={1}>
+            {/* <Col md={1}>
               <div className="imgallery_logout">
                 <Link to="/"><FaPowerOff /></Link>
               </div>
-            </Col>
+            </Col> */}
           </Row>
           <Row className="mt-3">
             <Col>
@@ -75,7 +90,7 @@ function Explorer() {
                     {fildata.map((value, i) => {
                       return (
                         <div className="imgallery_singlefolder" key={i}>
-                          <Link to="/explorer/images">
+                          <Link to="/explorer/foldername">
                             <div className="imgallery_folder_icon">
                               <FcFolder />
                             </div>
@@ -89,20 +104,26 @@ function Explorer() {
                   </>
                 ) : (
                   <>
-                    {folder.map((item, i) => (
+                    {isLoading ? (
+                      <Spinner animation="border" className="loader" />
+                    ) : (
                       <>
-                        <div className="imgallery_singlefolder" key={i}>
-                          <Link to="/explorer/images">
-                            <div className="imgallery_folder_icon">
-                              <FcFolder />
+                        {folder.map((item, i) => (
+                          <>
+                            <div className="imgallery_singlefolder" key={i}>
+                              <Link to="/explorer/foldername">
+                                <div className="imgallery_folder_icon">
+                                  <FcFolder />
+                                </div>
+                              </Link>
+                              <div className="imgallery_folder_name">
+                                {item.folderName}
+                              </div>
                             </div>
-                          </Link>
-                          <div className="imgallery_folder_name">
-                            {item.folderName}
-                          </div>
-                        </div>
+                          </>
+                        ))}
                       </>
-                    ))}
+                    )}
                   </>
                 )}
               </div>

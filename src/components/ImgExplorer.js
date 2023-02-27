@@ -17,24 +17,33 @@ import {
   Button,
   Modal,
   Toast,
+  Spinner,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function ImgExplorer() {
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fildata, setFildata] = useState([]);
+
   const [show, setShow] = useState(false);
   const [toast, setToast] = useState(false);
   const handleToast = () => setToast(true);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [fildata, setFildata] = useState([]);
   const fetchAPI = async () => {
+    setIsLoading(true);
     const response = await axios.get(
-      "https://63e5f0a583c0e85a86897d20.mockapi.io/images"
+      "https://backend-cms-service.careers360.de/images/?folder_name=gym"
     );
     const data = await response.data;
-    setImage(data);
+    setImages(data);
+    setIsLoading(false);
+    // setTimeout(() => {
+    //   setImages(response.data);
+    //   setIsLoading(false);
+    // }, 1000);
   };
 
   useEffect(() => {
@@ -43,7 +52,7 @@ function ImgExplorer() {
 
   const handleFilter = (e) => {
     const searchWord = e.target.value;
-    const newFilter = image.filter((value) => {
+    const newFilter = images.filter((value) => {
       return value.name?.toLowerCase().includes(searchWord?.toLowerCase());
     });
     setFildata(newFilter);
@@ -59,15 +68,13 @@ function ImgExplorer() {
                 <Link to="/explorer">
                   <FaArrowLeft />
                 </Link>
-                <a href="#Forward">
-                  <FaArrowRight />
-                </a>{" "}
+                <FaArrowRight />
               </div>
             </Col>
             <Col md={7}>
               <div className="imgallery_foldertitle">
                 <h3>Dashboard Images</h3>
-                <span>({image.length})</span>
+                <span>({images.length})</span>
               </div>
             </Col>
             <Col md={3}>
@@ -80,13 +87,13 @@ function ImgExplorer() {
                 </InputGroup>
               </div>
             </Col>
-            <Col md={1}>
+            {/* <Col md={1}>
               <div className="imgallery_logout">
                 <Link to="/">
                   <FaPowerOff />
                 </Link>
               </div>
-            </Col>
+            </Col> */}
           </Row>
           <Row className="mt-3">
             <Col>
@@ -97,7 +104,7 @@ function ImgExplorer() {
                       return (
                         <div className="imgallery_singlefolder" key={i}>
                           <div className="imgallery_folder_icon">
-                            <a href="#Dashboard_Images" onClick={handleShow}>
+                            <a href={value.name} onClick={handleShow}>
                               <img src={value.image} alt="images" />
                             </a>
                           </div>
@@ -113,23 +120,29 @@ function ImgExplorer() {
                   </>
                 ) : (
                   <>
-                    {image.map((item, i) => (
+                    {isLoading ? (
+                      <Spinner animation="border" className="loader" />
+                    ) : (
                       <>
-                        <div className="imgallery_singlefolder" key={i}>
-                          <div className="imgallery_folder_icon">
-                            <a href="#Dashboard_Images" onClick={handleShow}>
-                              <img src={item.image} alt="images" />
-                            </a>
-                          </div>
-                          <div className="imgallery_folder_name">
-                            {item.name}
-                          </div>
-                          <div className="imgallery_imgbutton">
-                            <Button onClick={handleToast}>Download</Button>
-                          </div>
-                        </div>
+                        {images.map((item, i) => (
+                          <>
+                            <div className="imgallery_singlefolder" key={i}>
+                              <div className="imgallery_folder_icon">
+                                <a href={item.name} onClick={handleShow}>
+                                  <img src={item.image} alt="images" />
+                                </a>
+                              </div>
+                              <div className="imgallery_folder_name">
+                                {item.name}
+                              </div>
+                              <div className="imgallery_imgbutton">
+                                <Button onClick={handleToast}>Download</Button>
+                              </div>
+                            </div>
+                          </>
+                        ))}
                       </>
-                    ))}
+                    )}
                   </>
                 )}
               </div>
@@ -137,7 +150,7 @@ function ImgExplorer() {
           </Row>
         </div>
       </Container>
-      <Modal show={show} onHide={handleClose} size="xl">
+      {/* <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton>
           <Modal.Title>ABC.jpg</Modal.Title>
         </Modal.Header>
@@ -155,8 +168,8 @@ function ImgExplorer() {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
-      <Toast
+      </Modal> */}
+      {/* <Toast
         show={toast}
         className="toast"
         bg="light"
@@ -168,7 +181,7 @@ function ImgExplorer() {
           ABC.jpg
         </Toast.Header>
         <Toast.Body>Your file has been downloaded.</Toast.Body>
-      </Toast>
+      </Toast> */}
     </>
   );
 }

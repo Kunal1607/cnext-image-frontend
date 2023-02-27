@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/explorer/" element={<Explorer />} />
-        <Route path="/explorer/images/" element={<ImgExplorer />} />
+        <Route path="/explorer/foldername/" element={<ImgExplorer />} />
       </Routes>
     </div>
   );
