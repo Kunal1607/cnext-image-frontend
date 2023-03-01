@@ -7,7 +7,7 @@ import {
   FaPowerOff,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import treeimg from "../assets/images/tree-736885__480.jpg";
+// import treeimg from "../assets/images/tree-736885__480.jpg";
 import {
   Container,
   Row,
@@ -19,31 +19,28 @@ import {
   Toast,
   Spinner,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ImageDownloader } from "@samvera/image-downloader";
 
 function ImgExplorer() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fildata, setFildata] = useState([]);
-
+  const {folder_name} = useParams ()
   const [show, setShow] = useState(false);
   const [toast, setToast] = useState(false);
   const handleToast = () => setToast(true);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+console.log(folder_name)
   const fetchAPI = async () => {
     setIsLoading(true);
     const response = await axios.get(
-      "https://backend-cms-service.careers360.de/images/?folder_name=gym"
+      `https://backend-cms-service.careers360.de/folders/${folder_name}/images`
     );
     const data = await response.data;
     setImages(data);
     setIsLoading(false);
-    // setTimeout(() => {
-    //   setImages(response.data);
-    //   setIsLoading(false);
-    // }, 1000);
   };
 
   useEffect(() => {
@@ -57,7 +54,7 @@ function ImgExplorer() {
     });
     setFildata(newFilter);
   };
-
+  // console.log(images[0].folder_name);
   return (
     <>
       <Container fluid className="imgallery_container">
@@ -65,7 +62,7 @@ function ImgExplorer() {
           <Row className="imgallery_navbar">
             <Col md={1}>
               <div className="imgallery_backforw">
-                <Link to="/explorer">
+                <Link to="/folders">
                   <FaArrowLeft />
                 </Link>
                 <FaArrowRight />
@@ -73,7 +70,7 @@ function ImgExplorer() {
             </Col>
             <Col md={7}>
               <div className="imgallery_foldertitle">
-                <h3>Dashboard Images</h3>
+                <h3>{folder_name}</h3>
                 <span>({images.length})</span>
               </div>
             </Col>
@@ -104,15 +101,15 @@ function ImgExplorer() {
                       return (
                         <div className="imgallery_singlefolder" key={i}>
                           <div className="imgallery_folder_icon">
-                            <a href={value.name} onClick={handleShow}>
-                              <img src={value.image} alt="images" />
-                            </a>
+                            {/* <a href={value.name} onClick={handleShow}> */}
+                              <img src={value.image} alt={value.name} />
+                            {/* </a> */}
                           </div>
                           <div className="imgallery_folder_name">
                             {value.name}
                           </div>
                           <div className="imgallery_imgbutton">
-                            <Button onClick={handleToast}>Download</Button>
+                            <Button>Download</Button>
                           </div>
                         </div>
                       );
@@ -128,15 +125,22 @@ function ImgExplorer() {
                           <>
                             <div className="imgallery_singlefolder" key={i}>
                               <div className="imgallery_folder_icon">
-                                <a href={item.name} onClick={handleShow}>
-                                  <img src={item.image} alt="images" />
-                                </a>
+                                {/* <a href={item.name} onClick={handleShow}> */}
+                                  <img src={item.image} alt={item.name} />
+                                {/* </a> */}
                               </div>
                               <div className="imgallery_folder_name">
                                 {item.name}
                               </div>
                               <div className="imgallery_imgbutton">
-                                <Button onClick={handleToast}>Download</Button>
+                                <ImageDownloader
+                                  className="download"
+                                  imageUrl={`https://backend-cms-service.careers360.de/folders/${item.folder_name}/images/${item.name}/download`}
+                                  imageTitle={item.name}
+                                  iconColor="#000000"
+                                >
+                                  Download
+                                </ImageDownloader>
                               </div>
                             </div>
                           </>

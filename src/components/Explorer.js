@@ -21,26 +21,20 @@ function Explorer() {
 
   const fetchAPI = async () => {
     setIsLoading(true);
-    const response = await axios.get(
-      "https://63e5f0a583c0e85a86897d20.mockapi.io/folders"
-    );
+    const response = await axios.get("https://backend-cms-service.careers360.de/folders")
     const data = await response.data;
     setFolder(data);
     setIsLoading(false);
-    // setTimeout(() => {
-    //     setFolder(response.data);
-    //     setIsLoading(false);
-    //   }, 1000);
   };
 
   useEffect(() => {
     fetchAPI();
   }, []);
-
+  // console.log(folder.folder_name);
   const handleFilter = (e) => {
     const searchWord = e.target.value;
     const newFilter = folder.filter((value) => {
-      return value.folderName
+      return value.folder_name
         ?.toLowerCase()
         .includes(searchWord?.toLowerCase());
     });
@@ -55,15 +49,15 @@ function Explorer() {
             <Col md={1}>
               <div className="imgallery_backforw">
                 <FaArrowLeft />
-                <Link to="/explorer/foldername">
+                <Link to="/folders/foldername">
                   <FaArrowRight />
                 </Link>
               </div>
             </Col>
             <Col md={7}>
               <div className="imgallery_foldertitle">
-                <h3>Images</h3>
-                <span>({folder.length})</span>
+                <h3>Image Gallery</h3>
+                <span>({folder?.length})</span>
               </div>
             </Col>
             <Col md={3}>
@@ -90,13 +84,13 @@ function Explorer() {
                     {fildata.map((value, i) => {
                       return (
                         <div className="imgallery_singlefolder" key={i}>
-                          <Link to="/explorer/foldername">
+                          <Link to={`/folders/${value.folder_name}/images`}>
                             <div className="imgallery_folder_icon">
                               <FcFolder />
                             </div>
                           </Link>
                           <div className="imgallery_folder_name">
-                            {value.folderName}
+                            {value.folder_name}
                           </div>
                         </div>
                       );
@@ -111,13 +105,13 @@ function Explorer() {
                         {folder.map((item, i) => (
                           <>
                             <div className="imgallery_singlefolder" key={i}>
-                              <Link to="/explorer/foldername">
+                              <Link to={`/folders/${item.folder_name}/images`}>
                                 <div className="imgallery_folder_icon">
                                   <FcFolder />
                                 </div>
                               </Link>
                               <div className="imgallery_folder_name">
-                                {item.folderName}
+                                {item.folder_name}
                               </div>
                             </div>
                           </>

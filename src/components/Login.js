@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import logo from "../assets/images/logo-blue.svg";
@@ -23,7 +23,7 @@ const Login = () => {
         password,
       })
       .then(() => {
-        navigate("/explorer");
+        navigate("/folders");
       })
       .catch(() => {
         return (
@@ -39,10 +39,8 @@ const Login = () => {
   };
 
   const login = useGoogleLogin({
-    onSuccess: () => navigate("/explorer"),
-    // onSuccess: response => console.log("Login Successfull: ",response),
+    onSuccess: () => navigate("/folders"),
     onError: () => navigate("/"),
-    // onError: response => console.log("Login Failed: ",response),
   });
 
   return (

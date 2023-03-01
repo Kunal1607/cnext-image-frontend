@@ -146,15 +146,20 @@ body {
 .imgallery_imgbutton {
   text-align: center;
 }
-.imgallery_imgbutton button,
-.imgallery_imgbutton button:active,
-.imgallery_imgbutton button:visited {
-  background: #2c5364;
+.download ,
+.download :visited {
+  background: #3a4d95;
+  border-radius: 4px;
+  border: 3px solid #3a4d95 ;
+  padding: 5px;
   margin-top: 5px;
   width: 161px;
+  color: #fff;
+  font-weight: 600;
 }
-.imgallery_imgbutton button:hover {
-  background: #0f2027;
+.download:hover {
+  background-color: #fff;
+  color: #3a4d95;
 }
 .imgallery_modal_img {
   text-align: center;
